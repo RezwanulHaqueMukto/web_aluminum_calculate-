@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amerimet Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator">
+        <h1>Amerimet Calculator</h1>
+        
+        <label for="aluminum-type">Select Aluminum Type:</label>
+        <select id="aluminum-type">
+            <option value="0.098">1100</option>
+            <option value="0.099">3003</option>
+            <option value="0.098">3105</option>
+            <option value="0.097">5052</option>
+        </select>
+        
+        <label>Inner Diameter (I.D):</label>
+        <input type="radio" name="id" value="16" checked> 16"
+        <input type="radio" name="id" value="20"> 20"
+        
+        <div class="inputs">
+            <label for="coil-weight">Coil Weight (lbs):</label>
+            <input type="number" id="coil-weight">
+            
+            <label for="coil-width">Coil Width (in):</label>
+            <input type="number" id="coil-width">
+        </div>
+        
+        <button onclick="calculateOD()">Calculate Outer Diameter</button>
+        <p>Outer Diameter: <span id="od-result">0</span></p>
+        
+        <script>
+            function calculateOD() {
+                let coilWeight = parseFloat(document.getElementById("coil-weight").value) || 0;
+                let coilWidth = parseFloat(document.getElementById("coil-width").value) || 0;
+                let density = parseFloat(document.getElementById("aluminum-type").value);
+                let id = parseFloat(document.querySelector('input[name="id"]:checked').value);
+                
+                if (coilWeight > 0 && coilWidth > 0) {
+                    let od = 2 * Math.sqrt((coilWeight / (Math.PI * coilWidth * density)) + (Math.pow(id, 2) / 4));
+                    document.getElementById("od-result").innerText = od.toFixed(2);
+                } else {
+                    document.getElementById("od-result").innerText = "Invalid input";
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>
